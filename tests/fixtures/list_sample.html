@@ -1,0 +1,710 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<!-- 기술진단 Open WAX 프로그램에서 :: 들어갈 경우 인식하지 못함  -->
+<title>화학제품관리시스템-승인 살생물물질 정보공개 목록 </title>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="화학제품관리시스템은 생활화학제품 및 살생물제의 안전관리에 관한 법률(약칭: 화학제품안전법, 시행 2019.1.1)에 의거하여 신고대상 생활화학제품, 승인대상 생활화학제품, 기존살생물물질, 살생물물질, 살생물제품 등의 신고·승인을 수행하는 시스템입니다.">
+
+<!-- CSS -->
+<link rel="shortcut icon" href="/images/icon/favicon.ico" type="image/x-icon">
+<!-- 공통 js,css -->
+<meta HTTP-EQUIV="Expires" CONTENT="0">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="No-Cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+
+<link rel="stylesheet" type="text/css" href="/static/css/common.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/layout.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css?v20220705"/>
+<link rel="stylesheet" type="text/css" href="/static/css/modal.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/sizeForm.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/custom.css?ver=20221018"/>
+<link rel="stylesheet" type="text/css" href="/static/css/layerPopup.css"/>
+
+<style type="text/css">
+	html.busy, html.busy * { cursor: wait !important; }
+</style>
+<script type="text/javascript" src="/static/js/jquery/jquery-1.10.2.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery-ui.js?v20201217" ></script>
+<script type="text/javascript" src="/static/js/jquery/JsonParser.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.form.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.validate.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.alphanum.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.mtz.monthpicker.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.blockUI.min.js" ></script>
+
+<!-- 웹취약성 조치 Cross-Domain JavaScript Source File Inclusion -->
+<!-- script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script -->
+<script type="text/javascript" src="/static/js/common/jquery.modal.min.js" ></script>
+
+<script type="text/javascript" src="/static/js/common/kcip.js" ></script>
+<script type="text/javascript" src="/static/js/common/script.js" ></script>
+<script type="text/javascript" src="/static/js/common/zebra_tooltips.js"></script>
+<script type="text/javascript" src="/static/js/common/common.js?ver=20221018" ></script>
+<script type="text/javascript" src="/static/js/common/datetimeUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/etcUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/fileUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/stringUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/handlebars-v4.1.1.js" ></script>
+<script type="text/javascript" src="/static/js/rexscript/rexpert.min.js"></script>
+<script type="text/javascript" src="/static/js/rexscript/rexpert.properties.js"></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.inputmask.date.extensions.js" ></script>
+<script type="text/javascript" src="/static/js/gnrlregist/Ffileinput3.js" ></script>
+<script type="text/javascript" src="/static/js/common/layerPopup.js" ></script><script type="text/javascript" src="/js/egovframework/com/cmm/showModalDialog.js" ></script>
+
+<!-- Script -->
+<script type="text/javascript">
+	var CONTEXT_ROOT = "";
+	var getContextPath = "";
+</script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<link rel="stylesheet" type="text/css" href="/static/css/layout2019.css"/> 
+<link rel="stylesheet" type="text/css" href="/static/css/cpmsJoin.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/css/sweetalert2.min.css"/>
+<script type="text/javascript" src="/assets/js/sweetalert2.min.js"></script>
+
+<script>
+var today = new Date();
+
+var year = today.getFullYear();
+var month = ('0' + (today.getMonth() + 1)).slice(-2);
+var day = ('0' + today.getDate()).slice(-2);
+
+var dateString = year + '-' + month  + '-' + day;
+
+		$(document).ready(function(){
+			var targetMsg = "";
+			if("" != targetMsg && dateString > '2024-01-30'){
+				swal.fire({
+					title : '제조수입량보고 일괄등록 안내',
+					html : '<br>' + targetMsg + '<br><br>' + '<a href="/cpms/mficm/zsoMficm001List.do" style="color:blue; font-weight:600; font-size:20px;">▶ 등록 화면으로 이동</a><br><br><a href="/cmmn/fileDown.do?atchFileId=FILE_000000004768827&fileSn=1" style="font-weight:600;font-size:16px;">매뉴얼 다운로드</a><br><a href="/cmmn/fileDown.do?atchFileId=FILE_000000004768828&fileSn=1" style="font-weight:600;font-size:16px;">Q&A 다운로드</a>'
+					+ '<br>'+'<img src="/img/common/mficmCall.png" style="width:100%; border:2px solid #0080005c; border-radius: 10px; padding:15px; margin-top:10px;">',		
+					icon : 'info',
+// 		 		   confirmButtonColor: '#3085d6', 
+// 		 		   confirmButtonText: '닫기',
+				   showConfirmButton: false,
+		 		   showCancelButton: true,
+		 		   cancelButtonColor: '#3085d6',
+		 	       cancelButtonText: "닫기",
+				}).then(result=>{
+					if(result.isConfirmed){
+// 		 				 top.window.close();
+		 			}
+				});
+			}
+
+			// 20240513 @SHL 인코딩 불가한 문자 포함 상호명 표기되도록 추가
+			if($("#user").val()) {
+				sessionStorage.setItem('convertedName', convertCodeToString(""));
+			}
+		});
+		
+		// 20240513 @SHL 인코딩 불가한 문자 포함 상호명 표기되도록 추가
+		$(window).load(function() {
+			let cmpnyNm = sessionStorage.getItem('convertedName');
+			if (cmpnyNm) {
+				$("#loginVO_name_header").text(cmpnyNm);
+			} else {
+				$("#loginVO_name_header").text("");
+			}
+		});
+		
+		$(function(){
+			// gnb
+			$(".gnbDepTwo").hide();
+			$(".gnbDepOne a").mouseover(function(){
+				//$(".gnbDepTwo").stop().slideDown(200);
+				$(".gnbDepTwo").show();
+				listHeightAvr();
+				return false;
+			});
+			$(".header").mouseleave(function(){
+				//$(".gnbDepTwo").stop().slideUp(200);
+				$(".gnbDepTwo").hide();
+				return false;
+			});
+			
+			
+			// gnb 높이 맞추기
+			function listHeightAvr(){
+				var len = $(".gnbDepTwo > ul > li").length;
+				var getHt = new Array();
+				for(var i = 0 ; i <= len-1 ; i++){
+					getHt[i] = $(".gnbDepTwo > ul > li").eq(i).height();
+				}
+				var maxHt = Math.max.apply(null, getHt);
+				$(".gnbDepTwo > ul > li").height(maxHt);
+			}
+			
+		});
+		
+		var iSecond; //초단위로 환산
+		var timerchecker = null;
+		var pChk = false;
+		window.onload = function() {
+			var isLogin = "";
+			if(isLogin != ""){
+				fncClearTime();
+				initTimer();
+			}
+		}
+
+		function fncClearTime() {
+		    iSecond = 3600;//60*30(1시간)
+		}
+		Lpad = function(str, len) {
+		    str = str + "";
+		    while (str.length < len) {
+		        str = "0" + str;
+		    }
+		    return str;
+		}
+		initTimer = function() {
+			var timer  = document.getElementById("sTimer");
+			var pTimer = "";
+			if(popName != ""){
+				//console.log('11111' + popName.document.getElementById("naviPopup").length);
+			}
+		    rHour = parseInt(iSecond / 3600);
+		    rHour = rHour % 60;
+		    rMinute = parseInt(iSecond / 60);
+		    rMinute = rMinute % 60;
+		    rSecond = iSecond % 60;
+		    if (iSecond > 0) {
+		    	timer.innerHTML = "&nbsp;" + Lpad(rMinute, 2) + "분" + Lpad(rSecond, 2) + "초";
+		        iSecond--;
+		        if(iSecond < 60 && !pChk){
+		        	pChk = true;
+		        	console.log("팝업 length : " + $("#layerPopup").length);
+		        	drowLayerPopupLogin('로그인 연장 안내', '', '');
+		        	initPtimer();
+		        }else{
+		        	timerchecker = setTimeout("initTimer()", 1000); // 1초 간격으로 체크
+		        }
+		    } else {
+		    	logout();
+		    }
+		}
+		initPtimer = function() {
+			var pTimer;
+		    var timer  = document.getElementById("sTimer");
+			if(popName != ""){
+				pTimer  = popName.document.getElementById("pCounter");
+		    }else{
+		    	pTimer  = document.getElementById("pCounter");
+		    }
+		    rHour = parseInt(iSecond / 3600);
+		    rHour = rHour % 60;
+		    rMinute = parseInt(iSecond / 60);
+		    rMinute = rMinute % 60;
+		    rSecond = iSecond % 60;
+		    if (iSecond > 0) {
+		        iSecond--;
+		        /* 
+		        if($("#layerPopup").length > 0){
+		        	if(popName != ""){
+			        	$("#layerPopup", popName.document).show();
+		        	}else{
+		        		$("#layerPopup").show();
+		        	}
+		        }
+		         */
+		        if(popName != ""){
+		        	$("#layerPopup", popName.document).show();
+	        	}else{
+	        		$("#layerPopup").show();
+	        	}
+		        timer.innerHTML  = "&nbsp;" + Lpad(rMinute, 2) + "분" + Lpad(rSecond, 2) + "초 ";
+		        pTimer.innerHTML = "남은 시간 : " + Lpad(rMinute, 2) + "분" + Lpad(rSecond, 2) + "초 입니다.";
+		    	timerchecker = setTimeout("initPtimer()", 1000); // 1초 간격으로 체크
+		    } else {
+		    	logout();
+		    }
+		}
+
+		function rTimer(b) {
+			$.ajax({
+			    method : "POST",
+			    url : "/cmmn/selectDu.do",
+			    //url : "/selectDu.do",
+			    dataType : "JSON",
+			    error:function(request,status,error){
+			        alert("error:"+error);
+			    },
+			    success : function result(data){
+			    	if(data != null){
+			    		if(b == "X"){
+			    			popName = "";
+			    			$("#layerPopup", popName.document).remove();
+			    		}else{
+			    			if(popName != ""){
+				    			$("#layerPopup", popName.document).remove();
+				    		}else{
+				    			$("#layerPopup").remove();
+				    		}
+			    		}
+			    		pChk = false; clearTimeout(timerchecker); fncClearTime(); initTimer();
+			    	}
+			    }
+			}); 
+		}
+
+		function logout() {
+		    clearTimeout(timerchecker);
+		    if(popName != "") popName.close();
+		    location.href="/uat/uia/actionLogout.do";
+		}
+		function notice() {
+			alert("준비중입니다.");
+		}
+		
+		//20240513 @SHL 인코딩 불가한 문자열 브라우저에 표기되도록 추가
+ 		function convertCodeToString(str) {
+			if (!str.includes('%d')) {
+				return str;
+			}
+			
+			let codes = str.split('%d#[');
+			
+			let result = '';
+			codes.forEach((item, idx) => {
+				if (idx === 0) {
+					result += item;
+				} else {
+					let endIdx = item.indexOf(']');
+					result += String.fromCodePoint(item.slice(0, endIdx));
+					result += item.slice(endIdx + 1);
+				}
+			});
+			
+			return result;
+		}
+		
+		function redirectEcolifeSystem() {
+			let isRedirect = confirm("생활화학제품과 관련된 서비스는 개편된 화학제품안전포털 초록누리에서 이용하실 수 있습니다.\n(확인을 선택하면 초록누리로 이동하며, 취소를 선택하면 이동하지 않습니다.)");
+			
+			if (!isRedirect) {
+				return;
+			}
+			
+			location.href = "https://ecolife.me.go.kr/";
+		}
+	</script>
+	
+<header id="header" class="header">
+	<!-- <header id="header" class="header top_nav_user3"> -->
+	<div class="snbWrap">
+		<div class="snb">
+				<h1><a href="/" class="logo"></a></h1>
+				<ul>
+					<li><a href="/uat/uia/headerGoLogin.do">로그인</a></li>
+					<!-- <li><a href="/uss/umt/EgovEntrprsMberSbscrbView.do">기업회원등록</a></li>
+					<li><a href="/uss/umt/EgovMberSbscrbView.do">기업 내 일반회원 등록</a></li> -->
+					<li><a href="/uat/uia/egovIdPasswordSearch.do">아이디/비밀번호 잦기</a></li>
+				</ul>
+			</div>
+		</div>
+	<div class="gnb">
+		<nav class="gnbDepOne">
+			<ul>
+				<li><a href="javascript:;">생활화학제품</a></li>
+				<li><a href="javascript:;">살생물제</a></li>
+				<li><a href="/uss/sam/stp/guideInstitution.do">제도안내</a></li>
+				<li><a href="javascript:;">전자민원</a></li>
+				<li><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000001">알림마당</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="gnbDepTwo">
+		<ul>
+			<li>
+				<dl>
+				<dt class="linkLock"><a href="javascript:redirectEcolifeSystem();">신고대상 생활화학제품</a></dt>
+						<dt><a href="/cpms/nonSafeStdrAnnounce/nnl001/Nnl001List.do">승인대상 생활화학제품</a></dt>
+						<dd><a href="/cpms/nonSafeStdrAnnounce/nnl002/Nnl002Dtl.do">신규제품 승인신청</a></dd>
+						<dd><a href="/cpms/nonSafeStdrAnnounce/nnl001/NnlCcrList.do">변경승인/변경신고</a></dd>
+						<dd><a href="/cpms/nonSafeStdrAnnounce/nnl001/NnlCanList.do">취하신청</a></dd>
+						</dl>
+			</li>
+			<li>
+				<dl>
+					<dt><a href="/cpms/existBiocideMttr/ebm/EbmList.do">기존살생물물질</a></dt>
+<!-- 							<dd class="linkLock"><a href="javascript:notice();">기존살생물물질 신고</a></dd> -->
+<dd><a href="/cpms/biocidalMttrPlan/nbp001List.do">물질승인 신청계획서 제출</a></dd>
+						<!-- <dd class="linkLock"><a href="javascript:notice();">물질승인 신청계획서 제출</a></dd> -->
+						<dt>살생물물질</dt>
+						<dd><a href="/cpms/biocidalMttr/confmReqst/nbm001List.do">살생물물질 승인신청</a></dd>
+						<dd><a href="/cpms/sameBiocidalMttr/confmReqst/sbmList.do"/>물질동등성 인정신청</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">척추동물 시험자료</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">부동의 확인 신청</a></dd>
+						<dd><a href="/cpms/apd/ApdList.do?materialGubun=1">선임해임신청</a></dd>
+						<dd><a href="/cpms/biocidalMttr/changeConfmReqst/nbmCcrList.do?changeType=AC">살생물물질 변경승인</a></dd>
+						<dd><a href="/cpms/biocidalMttr/changeConfmReqst/nbmCcrList.do?changeType=DC">살생물물질 변경신고</a></dd>
+						<dd><a href="/cpms/biocidalMttr/confmReqst/nbm000List.do">승인 살생물물질 정보공개</a></dd> 
+						<dt>살생물제품</dt>
+						<dd><a href="/cpms/bcp/BcpApplList.do">살생물제품 승인신청</a></dd>
+						<dd><a href="/cpms/bcp/BcpApplGroupList.do">살생물제품군 승인신청</a></dd>
+						<dd><a href="/cpms/excpt/excptList.do">제품승인 특례신청</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">제품유사성 인정신청</a></dd>
+						
+						<dd class="linkLock"><a href="javascript:notice();">척추동물 시험자료</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">부동의 확인 신청</a></dd>
+						<dd><a href="/cpms/apdNew/ApdNewList.do?materialGubun=2">선임해임신청</a></dd>
+						<dd><a href="/cpms/bcp/disc/bcp000List.do">승인 살생물제품 정보공개</a></dd> 
+						
+						<dt>산업계지원</dt>
+						<dd><a href="/cpms/data/DataGabAnalList.do">데이터갭분석</a></dd>
+						<dd><a href="/uss/sam/stp/TEGuide.do">유해성시험자료</a></dd>
+						<dd><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000009416">교육ㆍ실무가이드</a></dd>
+						<dd><a href="javascript:alert('준비중입니다.')">지원사업</a></dd>
+					</dl>
+			</li>
+			<li>
+				<dl class="hide">
+					<dt><a href="javascript:;"></a></dt>
+					<dd><a href="javascript:;"></a></dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt class="linkLock"><a href="javascript:redirectEcolifeSystem();">권리·의무 승계</a></dt>
+					<dt class="linkLock"><a href="javascript:redirectEcolifeSystem();">중소기업 지원사업</a></dt>
+					<dt><a href="/cpms/mficm/zsoMficm001List.do">제조수입량보고</a></dt>
+							<dd><a href="/cpms/mficm/zsoMficm001List.do">제조수입량보고 일괄 등록</a></dd>
+						<!--20200619 메뉴 추가-->
+					<dt><a href="/cpms/incomeReqNo/IrnList.do">수출입 업무</a></dt>
+					<dd><a href="/cpms/incomeReqNo/IrnList.do">수입 요건확인번호 신청</a></dd>
+					<dd><a href="/cpms/incomeExemp/IeList.do">수입요건 면제신청</a></dd>
+					
+					<dt><a href="/cpms/freeSalesCertificate/fsc001/Fsc001List.do">자유판매증명</a></dt>
+					</dl>
+			</li>
+			<li>
+				<dl>
+					<dt><a href="/cpmsv2/common/manual.do">종합자료실</a></dt>
+					<dt><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000001">공지사항</a></dt>
+					<dt><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000002">FAQ</a></dt>
+					<dt><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000004">자료실</a></dt>
+					<dt><a href="/uss/sam/stp/aboutCpms.do">시스템소개</a></dt>
+					<dt class="linkLock"><a href="javascript:notice();">수수료안내</a></dt>
+					<dt><a href="/uss/sam/stp/law.do">법령정보</a></dt>
+					</dl>
+			</li>
+		</ul>
+	</div>
+	
+	<input type="hidden" name="loginVO" id="loginVO" value="" />
+	 
+</header><div id="warp">
+			<hr>
+			<div id="container" class="conwrap">
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+	#container {width:90%;}
+</style>
+
+<script type="text/javaScript">
+	function enterkey() {
+	    if (window.event.keyCode == 13) {
+	    	search();
+	    }
+	}
+	
+	function press(){
+	    if (event.keyCode==13) {
+	    	search()
+	    }
+	}
+	
+	/* 검색 */
+	function search(){
+		$("#frm [name=pageIndex]").val("1");
+		document.search.action="/cpms/bcp/disc/bcp000List.do";
+		document.search.submit();
+	}
+	
+	/* 제품유형 */
+	function setBccTy(type){
+		document.search.BCC005.value = type.value;
+		document.search.action="/cpms/bcp/disc/bcp000List.do";
+		document.search.submit();
+	}
+	
+	/* n건씩 보기 */
+	function setCntPerPage(num){
+		document.search.pageNo.value = 1;
+		if(num == undefined){
+		}else{
+			document.search.countPerPage.value = num.value;
+		}	
+		document.search.action="/cpms/bcp/disc/bcp000List.do";
+		document.search.submit();
+	}
+	
+	/* 페이지네이션 */
+	function linkPage(pageNo){
+		document.search.pageNo.value = pageNo;
+		document.search.action="/cpms/bcp/disc/bcp000List.do";
+		document.search.submit();
+	}
+
+	/* 상세보기*/
+	function view(BCP_DISC_SN){
+		document.search.action = "/cpms/bcp/disc/BcpDisclosureView.do?bcpDiscSn="+BCP_DISC_SN;
+		document.search.submit();
+	}
+</script>
+
+
+	<!-- ====================== 상단  ====================== -->
+		<div class="tit_area" >
+			<h2>승인 살생물제품 정보공개</h2>
+			<div class="location">
+				<em><a href="/" title="Home">HOME</a></em><span>살생물제</span><span>살생물제품</span><span>승인 살생물제품 정보공개</span>
+			</div>
+		</div>
+	<!--  ==================== 검색 영역  ==================== -->
+		<form id="search" name="search" method="post" action="/cpms/bcp/disc/bcp000List.do">
+			<input type="hidden" name="pageNo" value="1"/>
+			<div class="box_search">
+				<ul>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li>
+					<label for="BCC005" class="w50" style="margin-left:20px !important;">제품유형</label>
+						<select id='BCC005' name='BCC005' style="width:105px;" onchange="setBccTy(this);">
+							<option value=''>전체</option>
+							
+								<option value="살균제" >살균제</option>
+							
+								<option value="살조제" >살조제</option>
+							
+								<option value="살서제" >살서제</option>
+							
+								<option value="살충제" >살충제</option>
+							
+								<option value="기피제" >기피제</option>
+							
+								<option value="재료장비용 보존제" >재료장비용 보존제</option>
+							
+								<option value="목재용 보존제" >목재용 보존제</option>
+							
+								<option value="기타 척추동물 제거제" >기타 척추동물 제거제</option>
+							
+								<option value="기타 무척추동물 제거제" >기타 무척추동물 제거제</option>
+							
+						</select>
+					</li>
+					<li> 
+						<label for="searchKey1" class="w50">검색어</label>
+		 				<select id="searchKey1" name="searchKey1" title="품목 리스트" style="width:150px;">
+	                		<option title="=전체=" 						value="SC001" 	>=전체=</option>
+	                		<option title="살생물제품 명칭" 		value="SC002" 	  selected="selected">살생물제품 명칭</option>
+	                		<option title="살생물물질 명칭" 		value="SC003" 	>살생물물질 명칭</option>
+	                		
+	                		  
+	               		</select>  
+						<input type="text" id="searchKey2" name="searchKey2" class="txt" onkeyup="enterkey();" style="margin-left: 13px; width: 185px;" value="홈매트">
+					</li>
+				</ul>
+		 		<a href="javascript:search();" class="btn_sch fr" onkeypress="press();"><span></span>조회</a>
+			</div>
+	<!--  ================ 승인 살생물제품 목록 ================ -->
+		<div class="opt_tool">
+			<div class="fl">
+				<span class="num fr">총게시물 <em>5</em>건 (1/1)</span>
+			</div>
+			<div class="fr" style="margin-top:14px;">
+	            <select name="countPerPage" id="countPerPage" title="리스트 건수" style="width:130px;" onchange="setCntPerPage(this);">
+	               	<option value="10" 		label="10건씩 보기"	 	title="10건씩 보기" />
+	               	<option value="30" 		label="30건씩 보기" 	title="30건씩 보기"/ >
+	               	<option value="50" 		label="50건씩 보기" 	title="50건씩 보기"/ >
+	               	<option value="100" 	label="100건씩 보기" 	title="100건씩 보기"/ selected="selected"> 
+	            <select>
+			</div>
+		</div>
+		</form>	
+		<div class="" style="padding-top:0px;">
+			<div class="tbl_list">
+				<table id="listTb">
+					<caption>승인 살생물제품 정보공개 목록 조회</caption>
+						<colgroup>
+							<col style="width: 3%;">
+							<col style="width: 6%;">
+							<col style="width: 20%;">
+							<col style="width: 20%;">
+							<col style="width: 14%;">
+							<col style="width: 20%;">
+							<col style="width: 10%;">
+							<col style="width: 5%;">
+						</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">순번</th>
+							<th scope="col">정보공개번호</th>
+							<th scope="col">살생물제품 명칭</th>
+							<th scope="col">살생물물질 명칭(CAS No. 함량)</th>
+							<th scope="col">사용가능 살생물제품 유형 및 기능</th>
+							<th scope="col">사용자 범위</th>
+							<th scope="col">승인 유효기간<br>(유효기간 만료일)</th>
+							<th scope="col">승인정보</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						
+						<tr>
+							<td>1</td>
+							<td>2025-182</td>
+							<td>홈매트 리퀴드 에스<br></td>
+							<td>Prallethrin (CAS No. 23031-36-9) 1.755% w/w<br></td>
+							<td>살충제</td>
+							<td>
+일반사용자(직업소비자)-다중이용시설(실내)
+일반사용자(일반소비자)-주거시설(실내)</td>
+							<td>10년 (2035.12.31. 까지)</td>
+							
+								<td><a href="javascript:view('2025-182')" class="000view" style="color:#2caa2c;">상세보기</a></td>
+							
+							
+						</tr>
+						
+						<tr>
+							<td>2</td>
+							<td>2025-183</td>
+							<td>홈매트 리퀴드 에스 아로마향<br></td>
+							<td>Prallethrin (CAS No. 23031-36-9) 1.755% w/w<br></td>
+							<td>살충제</td>
+							<td>
+일반사용자(직업소비자)-다중이용시설(실내)
+일반사용자(일반소비자)-주거시설(실내)</td>
+							<td>10년 (2035.12.31. 까지)</td>
+							
+								<td><a href="javascript:view('2025-183')" class="000view" style="color:#2caa2c;">상세보기</a></td>
+							
+							
+						</tr>
+						
+						<tr>
+							<td>3</td>
+							<td>2025-184</td>
+							<td>홈매트 리퀴드 에스 허브향<br></td>
+							<td>Prallethrin (CAS No. 23031-36-9) 1.755% w/w<br></td>
+							<td>살충제</td>
+							<td>
+일반사용자(직업소비자)-다중이용시설(실내)
+일반사용자(일반소비자)-주거시설(실내)</td>
+							<td>10년 (2035.12.31. 까지)</td>
+							
+								<td><a href="javascript:view('2025-184')" class="000view" style="color:#2caa2c;">상세보기</a></td>
+							
+							
+						</tr>
+						
+						<tr>
+							<td>4</td>
+							<td>2026-35</td>
+							<td>홈매트 리퀴드 알파플러스<br></td>
+							<td>Metofluthrin (CAS No. 240494-70-6, 0.458% w/w)<br></td>
+							<td>살충제</td>
+							<td>일반사용자-다중이용시설/주거시설(실내)</td>
+							<td>10년 (2026.4.8 ~ 2036.4.8)</td>
+							
+							
+								<td style="color:red;">작업중</td>
+							
+						</tr>
+						
+						<tr>
+							<td>5</td>
+							<td>2026-36</td>
+							<td>홈매트 리퀴드 알파플러스 허브향<br></td>
+							<td>Metofluthrin (CAS No. 240494-70-6, 0.458% w/w)<br></td>
+							<td>살충제</td>
+							<td>일반사용자-다중이용시설/주거시설(실내)</td>
+							<td>10년 (2026.4.8 ~ 2036.4.8)</td>
+							
+							
+								<td style="color:red;">작업중</td>
+							
+						</tr>
+						
+					</tbody>
+				</table><br/>
+				
+			<!--  ====================== pagination ====================== -->
+			<div class="opt_tool" align="center">
+				<div><strong>1</strong>&#160;
+</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+			<hr>
+			<!-- bottom -->
+		</div>
+
+		
+
+<footer class="footer">
+	<div class="footBtnArea">
+		<div class="footBtn">
+			<ul>
+				<li><a href="/uss/umt/EgovMberSbscrbPopup.do" target="_blank"><span style="font-weight:bold;color:green;font-size:18px;">개인정보처리방침</a></span><i></i></li>
+				<li><a href="/uss/sam/stp/guideInstitution.do">제도안내</a><i></i></li>
+				<li><a href="https://privacy.kisa.or.kr/main.do" target="_blank">개인정보침해 신고센터</a><i></i></li>
+				<li><a href="javascript:notice();">찾아오는 길</a><i></i></li>
+				<li><a href="javascript:notice();">사이트맵</a><i></i></li>
+				<li><a href="/cpmsv2/common/manual.do">E-Book 매뉴얼</a></li>
+			</ul>
+		</div>
+	</div>
+	<ul class="addArea">
+		<li class="addLeft">
+			<a class="addLeftLogo" href="http://www.keiti.re.kr/site/keiti/main.do" target="_blank"></a>
+			<address class="add">
+				(우)03367 서울특별시 은평구 진흥로 215 한국환경산업기술원<br/>
+				(안전기준적합확인 신고)<br/>
+				생활화학제품 고객지원센터 : 1800-0490(연결번호 : 1번)
+			</address>
+		</li>
+		<li class="addRight">
+			<a class="addRightLogo" href="https://nics.me.go.kr/main.do" target="_blank"></a>
+			<address class="add">
+				충청북도 청주시 흥덕구 오송읍 오송생명11로 270(정중리640)<br/>
+				살생물제 및 안전확인대상생활화학제품 승인<br/>
+				(살생물제 산업계 지원단) : 1800-4840
+			</address>
+		</li>
+	</ul>
+</footer></div>
+</body>
+</html>

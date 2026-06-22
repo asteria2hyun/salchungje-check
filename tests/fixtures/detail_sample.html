@@ -1,0 +1,1358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="ko">
+<head>
+<!-- 기술진단 Open WAX 프로그램에서 :: 들어갈 경우 인식하지 못함  -->
+<title>화학제품관리시스템</title>
+
+<!-- Meta -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="description" content="화학제품관리시스템은 생활화학제품 및 살생물제의 안전관리에 관한 법률(약칭: 화학제품안전법, 시행 2019.1.1)에 의거하여 신고대상 생활화학제품, 승인대상 생활화학제품, 기존살생물물질, 살생물물질, 살생물제품 등의 신고·승인을 수행하는 시스템입니다.">
+
+<!-- CSS -->
+<link rel="shortcut icon" href="/images/icon/favicon.ico" type="image/x-icon">
+<!-- 공통 js,css -->
+<meta HTTP-EQUIV="Expires" CONTENT="0">
+<meta HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="No-Cache">
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/> 
+
+<link rel="stylesheet" type="text/css" href="/static/css/common.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/layout.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/main.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/style.css?v20220705"/>
+<link rel="stylesheet" type="text/css" href="/static/css/modal.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/sizeForm.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/custom.css?ver=20221018"/>
+<link rel="stylesheet" type="text/css" href="/static/css/layerPopup.css"/>
+
+<style type="text/css">
+	html.busy, html.busy * { cursor: wait !important; }
+</style>
+<script type="text/javascript" src="/static/js/jquery/jquery-1.10.2.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery-ui.js?v20201217" ></script>
+<script type="text/javascript" src="/static/js/jquery/JsonParser.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.form.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.validate.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.alphanum.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.mtz.monthpicker.js" ></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.blockUI.min.js" ></script>
+
+<!-- 웹취약성 조치 Cross-Domain JavaScript Source File Inclusion -->
+<!-- script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script -->
+<script type="text/javascript" src="/static/js/common/jquery.modal.min.js" ></script>
+
+<script type="text/javascript" src="/static/js/common/kcip.js" ></script>
+<script type="text/javascript" src="/static/js/common/script.js" ></script>
+<script type="text/javascript" src="/static/js/common/zebra_tooltips.js"></script>
+<script type="text/javascript" src="/static/js/common/common.js?ver=20221018" ></script>
+<script type="text/javascript" src="/static/js/common/datetimeUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/etcUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/fileUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/stringUtil.js" ></script>
+<script type="text/javascript" src="/static/js/common/handlebars-v4.1.1.js" ></script>
+<script type="text/javascript" src="/static/js/rexscript/rexpert.min.js"></script>
+<script type="text/javascript" src="/static/js/rexscript/rexpert.properties.js"></script>
+<script type="text/javascript" src="/static/js/jquery/jquery.inputmask.date.extensions.js" ></script>
+<script type="text/javascript" src="/static/js/gnrlregist/Ffileinput3.js" ></script>
+<script type="text/javascript" src="/static/js/common/layerPopup.js" ></script><script type="text/javascript" src="/js/egovframework/com/cmm/showModalDialog.js" ></script>
+
+<!-- Script -->
+<script type="text/javascript">
+	var CONTEXT_ROOT = "";
+	var getContextPath = "";
+</script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<link rel="stylesheet" type="text/css" href="/static/css/layout2019.css"/> 
+<link rel="stylesheet" type="text/css" href="/static/css/cpmsJoin.css"/>
+<link rel="stylesheet" type="text/css" href="/assets/css/sweetalert2.min.css"/>
+<script type="text/javascript" src="/assets/js/sweetalert2.min.js"></script>
+
+<script>
+var today = new Date();
+
+var year = today.getFullYear();
+var month = ('0' + (today.getMonth() + 1)).slice(-2);
+var day = ('0' + today.getDate()).slice(-2);
+
+var dateString = year + '-' + month  + '-' + day;
+
+		$(document).ready(function(){
+			var targetMsg = "";
+			if("" != targetMsg && dateString > '2024-01-30'){
+				swal.fire({
+					title : '제조수입량보고 일괄등록 안내',
+					html : '<br>' + targetMsg + '<br><br>' + '<a href="/cpms/mficm/zsoMficm001List.do" style="color:blue; font-weight:600; font-size:20px;">▶ 등록 화면으로 이동</a><br><br><a href="/cmmn/fileDown.do?atchFileId=FILE_000000004768827&fileSn=1" style="font-weight:600;font-size:16px;">매뉴얼 다운로드</a><br><a href="/cmmn/fileDown.do?atchFileId=FILE_000000004768828&fileSn=1" style="font-weight:600;font-size:16px;">Q&A 다운로드</a>'
+					+ '<br>'+'<img src="/img/common/mficmCall.png" style="width:100%; border:2px solid #0080005c; border-radius: 10px; padding:15px; margin-top:10px;">',		
+					icon : 'info',
+// 		 		   confirmButtonColor: '#3085d6', 
+// 		 		   confirmButtonText: '닫기',
+				   showConfirmButton: false,
+		 		   showCancelButton: true,
+		 		   cancelButtonColor: '#3085d6',
+		 	       cancelButtonText: "닫기",
+				}).then(result=>{
+					if(result.isConfirmed){
+// 		 				 top.window.close();
+		 			}
+				});
+			}
+
+			// 20240513 @SHL 인코딩 불가한 문자 포함 상호명 표기되도록 추가
+			if($("#user").val()) {
+				sessionStorage.setItem('convertedName', convertCodeToString(""));
+			}
+		});
+		
+		// 20240513 @SHL 인코딩 불가한 문자 포함 상호명 표기되도록 추가
+		$(window).load(function() {
+			let cmpnyNm = sessionStorage.getItem('convertedName');
+			if (cmpnyNm) {
+				$("#loginVO_name_header").text(cmpnyNm);
+			} else {
+				$("#loginVO_name_header").text("");
+			}
+		});
+		
+		$(function(){
+			// gnb
+			$(".gnbDepTwo").hide();
+			$(".gnbDepOne a").mouseover(function(){
+				//$(".gnbDepTwo").stop().slideDown(200);
+				$(".gnbDepTwo").show();
+				listHeightAvr();
+				return false;
+			});
+			$(".header").mouseleave(function(){
+				//$(".gnbDepTwo").stop().slideUp(200);
+				$(".gnbDepTwo").hide();
+				return false;
+			});
+			
+			
+			// gnb 높이 맞추기
+			function listHeightAvr(){
+				var len = $(".gnbDepTwo > ul > li").length;
+				var getHt = new Array();
+				for(var i = 0 ; i <= len-1 ; i++){
+					getHt[i] = $(".gnbDepTwo > ul > li").eq(i).height();
+				}
+				var maxHt = Math.max.apply(null, getHt);
+				$(".gnbDepTwo > ul > li").height(maxHt);
+			}
+			
+		});
+		
+		var iSecond; //초단위로 환산
+		var timerchecker = null;
+		var pChk = false;
+		window.onload = function() {
+			var isLogin = "";
+			if(isLogin != ""){
+				fncClearTime();
+				initTimer();
+			}
+		}
+
+		function fncClearTime() {
+		    iSecond = 3600;//60*30(1시간)
+		}
+		Lpad = function(str, len) {
+		    str = str + "";
+		    while (str.length < len) {
+		        str = "0" + str;
+		    }
+		    return str;
+		}
+		initTimer = function() {
+			var timer  = document.getElementById("sTimer");
+			var pTimer = "";
+			if(popName != ""){
+				//console.log('11111' + popName.document.getElementById("naviPopup").length);
+			}
+		    rHour = parseInt(iSecond / 3600);
+		    rHour = rHour % 60;
+		    rMinute = parseInt(iSecond / 60);
+		    rMinute = rMinute % 60;
+		    rSecond = iSecond % 60;
+		    if (iSecond > 0) {
+		    	timer.innerHTML = "&nbsp;" + Lpad(rMinute, 2) + "분" + Lpad(rSecond, 2) + "초";
+		        iSecond--;
+		        if(iSecond < 60 && !pChk){
+		        	pChk = true;
+		        	console.log("팝업 length : " + $("#layerPopup").length);
+		        	drowLayerPopupLogin('로그인 연장 안내', '', '');
+		        	initPtimer();
+		        }else{
+		        	timerchecker = setTimeout("initTimer()", 1000); // 1초 간격으로 체크
+		        }
+		    } else {
+		    	logout();
+		    }
+		}
+		initPtimer = function() {
+			var pTimer;
+		    var timer  = document.getElementById("sTimer");
+			if(popName != ""){
+				pTimer  = popName.document.getElementById("pCounter");
+		    }else{
+		    	pTimer  = document.getElementById("pCounter");
+		    }
+		    rHour = parseInt(iSecond / 3600);
+		    rHour = rHour % 60;
+		    rMinute = parseInt(iSecond / 60);
+		    rMinute = rMinute % 60;
+		    rSecond = iSecond % 60;
+		    if (iSecond > 0) {
+		        iSecond--;
+		        /* 
+		        if($("#layerPopup").length > 0){
+		        	if(popName != ""){
+			        	$("#layerPopup", popName.document).show();
+		        	}else{
+		        		$("#layerPopup").show();
+		        	}
+		        }
+		         */
+		        if(popName != ""){
+		        	$("#layerPopup", popName.document).show();
+	        	}else{
+	        		$("#layerPopup").show();
+	        	}
+		        timer.innerHTML  = "&nbsp;" + Lpad(rMinute, 2) + "분" + Lpad(rSecond, 2) + "초 ";
+		        pTimer.innerHTML = "남은 시간 : " + Lpad(rMinute, 2) + "분" + Lpad(rSecond, 2) + "초 입니다.";
+		    	timerchecker = setTimeout("initPtimer()", 1000); // 1초 간격으로 체크
+		    } else {
+		    	logout();
+		    }
+		}
+
+		function rTimer(b) {
+			$.ajax({
+			    method : "POST",
+			    url : "/cmmn/selectDu.do",
+			    //url : "/selectDu.do",
+			    dataType : "JSON",
+			    error:function(request,status,error){
+			        alert("error:"+error);
+			    },
+			    success : function result(data){
+			    	if(data != null){
+			    		if(b == "X"){
+			    			popName = "";
+			    			$("#layerPopup", popName.document).remove();
+			    		}else{
+			    			if(popName != ""){
+				    			$("#layerPopup", popName.document).remove();
+				    		}else{
+				    			$("#layerPopup").remove();
+				    		}
+			    		}
+			    		pChk = false; clearTimeout(timerchecker); fncClearTime(); initTimer();
+			    	}
+			    }
+			}); 
+		}
+
+		function logout() {
+		    clearTimeout(timerchecker);
+		    if(popName != "") popName.close();
+		    location.href="/uat/uia/actionLogout.do";
+		}
+		function notice() {
+			alert("준비중입니다.");
+		}
+		
+		//20240513 @SHL 인코딩 불가한 문자열 브라우저에 표기되도록 추가
+ 		function convertCodeToString(str) {
+			if (!str.includes('%d')) {
+				return str;
+			}
+			
+			let codes = str.split('%d#[');
+			
+			let result = '';
+			codes.forEach((item, idx) => {
+				if (idx === 0) {
+					result += item;
+				} else {
+					let endIdx = item.indexOf(']');
+					result += String.fromCodePoint(item.slice(0, endIdx));
+					result += item.slice(endIdx + 1);
+				}
+			});
+			
+			return result;
+		}
+		
+		function redirectEcolifeSystem() {
+			let isRedirect = confirm("생활화학제품과 관련된 서비스는 개편된 화학제품안전포털 초록누리에서 이용하실 수 있습니다.\n(확인을 선택하면 초록누리로 이동하며, 취소를 선택하면 이동하지 않습니다.)");
+			
+			if (!isRedirect) {
+				return;
+			}
+			
+			location.href = "https://ecolife.me.go.kr/";
+		}
+	</script>
+	
+<header id="header" class="header">
+	<!-- <header id="header" class="header top_nav_user3"> -->
+	<div class="snbWrap">
+		<div class="snb">
+				<h1><a href="/" class="logo"></a></h1>
+				<ul>
+					<li><a href="/uat/uia/headerGoLogin.do">로그인</a></li>
+					<!-- <li><a href="/uss/umt/EgovEntrprsMberSbscrbView.do">기업회원등록</a></li>
+					<li><a href="/uss/umt/EgovMberSbscrbView.do">기업 내 일반회원 등록</a></li> -->
+					<li><a href="/uat/uia/egovIdPasswordSearch.do">아이디/비밀번호 잦기</a></li>
+				</ul>
+			</div>
+		</div>
+	<div class="gnb">
+		<nav class="gnbDepOne">
+			<ul>
+				<li><a href="javascript:;">생활화학제품</a></li>
+				<li><a href="javascript:;">살생물제</a></li>
+				<li><a href="/uss/sam/stp/guideInstitution.do">제도안내</a></li>
+				<li><a href="javascript:;">전자민원</a></li>
+				<li><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000001">알림마당</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="gnbDepTwo">
+		<ul>
+			<li>
+				<dl>
+				<dt class="linkLock"><a href="javascript:redirectEcolifeSystem();">신고대상 생활화학제품</a></dt>
+						<dt><a href="/cpms/nonSafeStdrAnnounce/nnl001/Nnl001List.do">승인대상 생활화학제품</a></dt>
+						<dd><a href="/cpms/nonSafeStdrAnnounce/nnl002/Nnl002Dtl.do">신규제품 승인신청</a></dd>
+						<dd><a href="/cpms/nonSafeStdrAnnounce/nnl001/NnlCcrList.do">변경승인/변경신고</a></dd>
+						<dd><a href="/cpms/nonSafeStdrAnnounce/nnl001/NnlCanList.do">취하신청</a></dd>
+						</dl>
+			</li>
+			<li>
+				<dl>
+					<dt><a href="/cpms/existBiocideMttr/ebm/EbmList.do">기존살생물물질</a></dt>
+<!-- 							<dd class="linkLock"><a href="javascript:notice();">기존살생물물질 신고</a></dd> -->
+<dd><a href="/cpms/biocidalMttrPlan/nbp001List.do">물질승인 신청계획서 제출</a></dd>
+						<!-- <dd class="linkLock"><a href="javascript:notice();">물질승인 신청계획서 제출</a></dd> -->
+						<dt>살생물물질</dt>
+						<dd><a href="/cpms/biocidalMttr/confmReqst/nbm001List.do">살생물물질 승인신청</a></dd>
+						<dd><a href="/cpms/sameBiocidalMttr/confmReqst/sbmList.do"/>물질동등성 인정신청</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">척추동물 시험자료</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">부동의 확인 신청</a></dd>
+						<dd><a href="/cpms/apd/ApdList.do?materialGubun=1">선임해임신청</a></dd>
+						<dd><a href="/cpms/biocidalMttr/changeConfmReqst/nbmCcrList.do?changeType=AC">살생물물질 변경승인</a></dd>
+						<dd><a href="/cpms/biocidalMttr/changeConfmReqst/nbmCcrList.do?changeType=DC">살생물물질 변경신고</a></dd>
+						<dd><a href="/cpms/biocidalMttr/confmReqst/nbm000List.do">승인 살생물물질 정보공개</a></dd> 
+						<dt>살생물제품</dt>
+						<dd><a href="/cpms/bcp/BcpApplList.do">살생물제품 승인신청</a></dd>
+						<dd><a href="/cpms/bcp/BcpApplGroupList.do">살생물제품군 승인신청</a></dd>
+						<dd><a href="/cpms/excpt/excptList.do">제품승인 특례신청</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">제품유사성 인정신청</a></dd>
+						
+						<dd class="linkLock"><a href="javascript:notice();">척추동물 시험자료</a></dd>
+						<dd class="linkLock"><a href="javascript:notice();">부동의 확인 신청</a></dd>
+						<dd><a href="/cpms/apdNew/ApdNewList.do?materialGubun=2">선임해임신청</a></dd>
+						<dd><a href="/cpms/bcp/disc/bcp000List.do">승인 살생물제품 정보공개</a></dd> 
+						
+						<dt>산업계지원</dt>
+						<dd><a href="/cpms/data/DataGabAnalList.do">데이터갭분석</a></dd>
+						<dd><a href="/uss/sam/stp/TEGuide.do">유해성시험자료</a></dd>
+						<dd><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000009416">교육ㆍ실무가이드</a></dd>
+						<dd><a href="javascript:alert('준비중입니다.')">지원사업</a></dd>
+					</dl>
+			</li>
+			<li>
+				<dl class="hide">
+					<dt><a href="javascript:;"></a></dt>
+					<dd><a href="javascript:;"></a></dd>
+				</dl>
+			</li>
+			<li>
+				<dl>
+					<dt class="linkLock"><a href="javascript:redirectEcolifeSystem();">권리·의무 승계</a></dt>
+					<dt class="linkLock"><a href="javascript:redirectEcolifeSystem();">중소기업 지원사업</a></dt>
+					<dt><a href="/cpms/mficm/zsoMficm001List.do">제조수입량보고</a></dt>
+							<dd><a href="/cpms/mficm/zsoMficm001List.do">제조수입량보고 일괄 등록</a></dd>
+						<!--20200619 메뉴 추가-->
+					<dt><a href="/cpms/incomeReqNo/IrnList.do">수출입 업무</a></dt>
+					<dd><a href="/cpms/incomeReqNo/IrnList.do">수입 요건확인번호 신청</a></dd>
+					<dd><a href="/cpms/incomeExemp/IeList.do">수입요건 면제신청</a></dd>
+					
+					<dt><a href="/cpms/freeSalesCertificate/fsc001/Fsc001List.do">자유판매증명</a></dt>
+					</dl>
+			</li>
+			<li>
+				<dl>
+					<dt><a href="/cpmsv2/common/manual.do">종합자료실</a></dt>
+					<dt><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000001">공지사항</a></dt>
+					<dt><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000002">FAQ</a></dt>
+					<dt><a href="/cop/bbs/selectBoardList.do?bbsId=BBSMSTR_000000000004">자료실</a></dt>
+					<dt><a href="/uss/sam/stp/aboutCpms.do">시스템소개</a></dt>
+					<dt class="linkLock"><a href="javascript:notice();">수수료안내</a></dt>
+					<dt><a href="/uss/sam/stp/law.do">법령정보</a></dt>
+					</dl>
+			</li>
+		</ul>
+	</div>
+	
+	<input type="hidden" name="loginVO" id="loginVO" value="" />
+	 
+</header><div id="warp">
+			<hr>
+			<div id="container" class="conwrap">
+				
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- CSS -->
+<link rel="stylesheet" type="text/css" href="/css/bcpDisclosure.css?ver=1" />
+
+<script>
+	$(function() {
+		/** 안전성에 관한 종합자료 > 최종 적용 결과 */
+		var year10_1 = '√'
+		var year10_2 = '-'
+		var year5_1 = '-'
+		var year3_2 = '-'
+		
+		const year10_none = year10_1.replace(/-/g, '') ? '승인 (10년)' : null;
+		const year10_restricted = year10_2.replace(/-/g, '') ? '승인 (10년)' : null;
+		const year5_one = year5_1.replace(/-/g, '') ? '승인 (5년)' : null;
+		const year3_both = year3_2.replace(/-/g, '') ? '승인 (3년)' : null;
+		
+		const year_result = year10_none || year10_restricted || year5_one || year3_both || '-';
+		document.querySelector('#result_year').textContent = year_result;
+	});
+
+	/** 메뉴 toggle */
+	$(document).on('click', '.openBtn, .closeBtn', function() {
+		$(this).parent().next().slideToggle();
+	  	$(this).toggle();
+	  	$(this).siblings().not('#bpdWrap').toggle();
+	});
+	
+	/** 종합자료 열기 */
+	function fn_openExpr(exprGb) {
+		const exprGubun = exprGb;
+		const bcpSn = document.querySelector("input[name='bcpSn']").value;
+		const bcpMstId = document.querySelector("input[name='bcpMstId']").value;
+		const bcpProd = window.open('/cpmsv2/expr/exprNavMain.do?bcpSn='+bcpSn+'&exprGb='+exprGubun+'&mstId='+bcpMstId, 'prod', 'width=1600, height=950, left=550, top=200, resizable = yes, scrollbars = yes');
+	}
+</script>
+
+	<!-- ====================== 상단  ====================== -->
+		<div id="warp" style="padding-bottom:50px;">
+			<div class="tit_area">
+				<h2 style="line-height:1.5em;">승인 살생물제품 정보공개
+					<img style="position:relative; margin-left:5px; width:35px;" class="info" src="/img/form/info3.png" alt="정보공개" />
+				</h2>
+				<div class="location">
+					<em><a href="/" title="Home">HOME</a></em><span>살생물제</span><span><a href="#" onclick="doList()" title="살생물 제품">살생물제품</a></span><span>승인 살생물제품 정보공개</span>
+				</div>
+			</div>
+	<!-- ================== 살생물제품 정보 ================= -->
+			<div class="form-h20">살생물제품 정보</div>
+			<div class="tableWrap">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="35%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>정보공개번호</th>
+							<td>2025-182</td>
+						</tr>
+						<tr>
+							<th>제품명</th>
+							<td>홈매트 리퀴드 에스</td>
+						</tr>
+						
+							<tr>
+								<th>추가제품명</th>
+								<td>홈키파 홈매트, 홈키파 홈매트 리퀴드, 홈키파 리퀴드, 홈매트 리퀴드, 홈키파 홈매트 프리미엄 무향, 홈키파 홈매트 프리미엄 리퀴드 무향, 홈키파 리퀴드 프리미엄 무향, 홈매트 리퀴드 프리미엄 무향</td>
+							</tr>
+						
+						<tr>
+							<th>살생물제품의 승인번호</th>
+							<td>0525-0074</td>
+						</tr>
+						<tr>
+							<th>승인의 유효기간</th>
+							<td>10년 (2035.12.31. 까지)</td>
+						</tr>
+						<tr>
+							<th>살생물제품의 승인정보</th>
+							<td>일반 승인제품(●)/특례 승인제품(○)/한시적 승인제품(○)/제품유사성 인정제품(○)/최초승인이후 재승인제품(○)</td>
+						</tr>
+						<tr>
+							<th>살생물제품유형</th>
+							<td>살충제</td>
+						</tr>
+						<tr>
+							<th>사용 대상자, 사용자 범위</th>
+							<td>
+일반사용자(직업소비자)-다중이용시설(실내)
+일반사용자(일반소비자)-주거시설(실내)</td>
+						</tr>
+						<tr>
+							<th>효과ㆍ효능</th>
+							<td>
+[모기의 살충]</td>
+						</tr>
+						<tr>
+							<th>표준 사용량</th>
+							<td>
+30 m3 공간에서 1일 10시간 사용</td>
+						</tr>
+						<tr>
+							<th>사용방법</th>
+							<td style="text-align:justify;">· 1일 10시간 사용을 권장하고 최대 15시간까지 사용 가능합니다.
+ ① 살충 원액이 든 용기를 훈증기에 넣고 플러그를 콘센트에 낀 후 스위치를 켜십시오.
+ ②-1 일반형 훈증기: 이 제품 1개는 창문을 열지 않은 상태일 때 약 30 m3 에서 효과적입니다. 이 제품 1개(29 mL)의 총 사용시간은 약 450시간이며, 1일 10시간 사용 시 약 45일간 사용할 수 있습니다.
+ ②-2 모드형 훈증기: 이 제품 1개는 일반 모드에서 창문을 열지 않은 상태일 때, 강 모드에서 창문을 연 상태일 때 약 30 m3 에서 효과적입니다. 이 제품 1개(29 mL)의 총 사용시간은 일반 모드에서 약 450시간, 강 모드에서 약 315시간이며, 1일 10시간 사용 시 각각 약 45일간, 31일간 사용할 수 있습니다.
+								<img src="/images/cpms/0525-0074_use.png" onerror="this.style.display='none'"/>
+							</td>
+						</tr>
+						<tr>
+							<th>유통기한</th>
+							<td>제조일로부터 
+36개월</td>
+						</tr>
+						<tr>
+							<th>살생물제품 제형</th>
+							<td>LV, Liquid vaporizer</td>
+						</tr>
+						<tr>
+							<th>중량ㆍ용량ㆍ매수</th>
+							<td>29 mL</td>
+						</tr>
+						
+						
+							<tr>
+								<th>(국내) 제조자(주소, 연락처)</th>
+								<td>헨켈홈케어코리아 유한회사 ((15608) 경기도 안산시 단원구 갖바치로 3 (성곡동)
+본점 소재지: 서울특별시 강남구 테헤란로 412(대치동), 031-489-4950)</td>
+							</tr>
+							<tr>
+								<th>(국내) 제조시설 소재지</th>
+								<td>
+제조시설-1(제조 및 1차 포장) (15608) 경기도 안산시 단원구 갖바치로 3 (성곡동)
+제조시설-2(2차 포장)_[수탁: 한국디비케이 ㈜] (18576) 경기도 화성시 팔탄면 노하길 383</td>
+							</tr>
+							<tr>
+								<th>(수입) 수입자(주소, 연락처)</th>
+								<td>-</td>
+							</tr>
+							<tr>
+								<th>(수입) 제조시설 소재지</th>
+								<td>-</td>
+							</tr>
+						
+					</tbody>
+				</table>
+			</div>
+	<!-- ==================== 안전사용정보 =================== -->
+			<div class="form-h20">안전사용정보</div>
+			<div class="tableWrap">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="10%" />
+						<col width="25%" />
+						<col width="20%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th rowspan="3">제품성분</th>
+							<th>살생물물질명<br/>(CAS No., 함량)</th>
+							<td colspan="2">Prallethrin (CAS No. 23031-36-9) 1.755% w/w</td>
+						</tr>
+						<tr>
+							<th>위해우려물질</th>
+							<td colspan="2">[기타]
+분류표시 영향 물질
+- Aliphatic hydrocarbon (CAS No. 93924-07-3)
+- White mineral oil (CAS No. 8042-47-5)</td>
+						</tr>
+						<tr>
+							<th>나노물질</th>
+							<td colspan="2">-</td>
+						</tr>
+						<tr>
+							<th rowspan="6" colspan="2">분류ㆍ표시</th>
+							<td rowspan="6" style="text-align:center;">
+								<span style="text-decoration:underline; font-weight:bold;">신호어</span>
+								<p style="font-weight:normal; border-bottom:none; text-decoration:none;">위험</p>
+								
+									<div style="display:flex; width:fit-content; flex-direction:column; justify-content:center;">
+										
+											<img src="/static/images/pictr_chrctr/ghs06.gif" alt="" style="width:80%; margin:auto;" />
+										
+											<img src="/static/images/pictr_chrctr/ghs08.gif" alt="" style="width:80%; margin:auto;" />
+										
+											<img src="/static/images/pictr_chrctr/ghs09.gif" alt="" style="width:80%; margin:auto;" />
+										
+									</div>
+								
+								
+							</th>
+							<td style="font-weight: bold;">유해성분류</th>
+						</tr>
+						<tr>
+							<td>인화성 액체(2.6)의 구분 4
+급성 흡입독성(3.1)의 구분 3
+피부 과민성(3.4)의 구분 1
+흡인 유해성(3.10)의 구분 1
+수생환경 유해성(4.1) 급성의 구분 1
+수생환경 유해성(4.1) 만성의 구분 1</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold;">유해‧위험문구</th>
+						</tr>
+						<tr>
+							<td>H227 - 가연성 액체
+H331 - 흡입하면 유독함
+H317 - 알레르기성 피부 반응을 일으킬 수 있음
+H304 - 삼켜서 기도로 유입되면 치명적일 수 있음
+H400 - 수생생물에 매우 유독함
+H410 - 장기적 영향에 의해 수생생물에 매우 유독함</td>
+						</tr>
+						<tr>
+							<td style="font-weight: bold;">예방조치문구</th>
+						</tr>
+						<tr>
+							<td style="text-align:justify;">P210 - 열, 고온의 표면, 스파크, 화염 및 그 밖의 점화원으로부터 멀리하시오. 금연
+P261 - 분진/흄/가스/미스트/증기/스프레이를 흡입하지 마시오.
+P271 - 옥외 또는 환기가 잘 되는 곳에서만 취급하시오.
+P272 - 작업장 밖으로 오염된 작업복을 반출하지 마시오.
+P273 - 환경으로 배출하지 마시오.
+P280 - 보호장갑/보호의/보안경/안면보호구를 착용하시오.
+P301+P310 - 삼켰다면 즉시 의료기관/의사의 진찰을 받으시오.
+P302+P352 - 피부에 묻으면 다량의 물로 씻으시오. 
+P304+340 - 흡입하면 신선한 공기가 있는 곳으로 옮기고 호흡하기 쉬운 자세로 안정을 취하시오. 
+P311 - 의료기관, 의사의 진찰을 받으시오.
+P321 - 적절한 처치를 하시오.
+P333+P313 - 피부 자극 또는 홍반이 나타나면 의학적인 조치/조언을 받으시오.
+P362+P364 - 오염된 의류를 벗고 다시 사용 전 세척하시오.
+P370+P378 - 화재 시 불을 끄기 위해 적절한 소화제를 사용하시오.
+P391 - 누출물을 모으시오.
+P403+P233 - 용기는 환기가 잘 되는 곳에 단단히 밀폐하여 저장하시오.
+P405 - 잠금장치를 하여 저장하시오.
+P501 - 폐기물 관련 법령에 따라 내용물/용기를 폐기하시오.</td>
+						</tr>
+						<tr>
+							<th colspan="2">어린이보호포장용기 해당여부</th>
+							<td colspan="2">해당하나 적용 제외
+('살생물제품 안전용기 및 포장에 관한 규정‘ [별표2]-2-가-(4) 개봉 후 내용물이 직접 노출되지 않는 제품임)</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	<!-- ==================== 사용상 주의사항 =================== -->
+			<div class="form-h20">사용상 주의사항</div>
+			<div class="tableWrap">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="10%" />
+						<col width="25%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th colspan="3">• 사용상 주의사항에 따른 폭발ㆍ화재 시 대처 · 방법</th>
+						</tr>
+						<tr>
+							<th rowspan="2">소화방법 및 소화시 유의사항</th>
+							<th>화재 진압시에 착용할 보호구</th>
+							<td style="text-align:justify;">
+- 화재 시 물스프레이로 용기를 차게 할 것.
+- 공기 호흡기 및 보호복을 착용할 것.</td>
+						</tr>
+						<tr>
+							<th>살생물물질 자체 또는 살생물물질의 연소로 부터 발생하는 위험성(유해화학물질 등)</th>
+							<td style="text-align:justify;">
+- 화재 시 유해한 가스 생성.
+- 가연성 액체, 화재 시 제품이 불에 탐.
+- 강한 열에 노출되면 분해될 위험이 있음.</td>
+						</tr>
+						<tr>
+							<th rowspan="2">소화제 및 소화장비</th>
+							<th>적절한 소화제</th>
+							<td style="text-align:justify;">
+- 소화수를 사용할 것.</td>
+						</tr>
+						<tr>
+							<th>안전상의이유로사용하지않아야하는소화제</th>
+							<td style="text-align:justify;">
+- 강하게 물을 분사하지 말 것.(튈 우려가 있음)</td>
+						</tr>
+						<tr>
+							<th colspan="3">• 사용상 주의사항에 따른 누출 시 방제요령</th>
+						</tr>
+						<tr>
+							<th rowspan="3">예방조치</th>
+							<th>개인보호구 착용</th>
+							<td style="text-align:justify;">
+- 제품 사용 시 별도의 개인보호구 착용은 필요치 않음.</td>
+						</tr>
+						<tr>
+							<th>환경 예방 조치</th>
+							<td style="text-align:justify;">
+- 본 제품의 유효성분은 어류와 수생동물에 대해 강력한 독성을 나타내기 때문에 본 제품과 빈 용기가 하천이나 저수지 등에 유입되지 않도록 주의할 것.
+- 사용 후 제품이 환경으로 직접 배출되지 않도록 할 것.</td>
+						</tr>
+						<tr>
+							<th>방제약품, 장비, 방법</th>
+							<td style="text-align:justify;">-</td>
+						</tr>
+						<tr>
+							<th colspan="3">• 사용 시 사후관리방법</th>
+						</tr>
+						<tr>
+							<th rowspan="6">안전한 저장 및 보관을 위한 방법ㆍ조건</th>
+							<th>저장 공간 및 저장 용기에 대한 재질, 특정한 모양·형태, 환기시설 등</th>
+							<td style="text-align:justify;">
+- 본래 용기에 보관할 것.
+- 점화원과 격리하여 보관할 것.
+- 환기가 잘 되는 장소에 보관할 것.
+- 어린이의 손이 닿지 않는 장소에 보관 및 설치할 것.</td>
+						</tr>
+						<tr>
+							<th>피해야 할 물질과 조건, 유해한 분해 생성물 등</th>
+							<td style="text-align:justify;">
+- 화기에 주의하여 화기 부근에서는 사용하지 말며 기구를 거꾸로 또는 매달아 사용하지 말 것.</td>
+						</tr>
+						<tr>
+							<th>온도, 습도, 빛 등 저장ㆍ보관조건</th>
+							<td style="text-align:justify;">
+- 직사광선을 피하고 실온(1~30℃)에서 보관할 것.
+- 3~4개월 이상 장기간 사용하지 않을 시에는 살충원액 용기를 꺼내어 뚜껑을 잘 막은 후 보관할 것.</td>
+						</tr>
+						<tr>
+							<th>정전기 방지 조치</th>
+							<td style="text-align:justify;">
+-</td>
+						</tr>
+						<tr>
+							<th>사용시 주의 사항</th>
+							<td style="text-align:justify;">
+? 사용 전에 표시사항을 반드시 읽고, 표시사항에 따라 제품을 사용하시오.
+? 표시사항에 기재된 제품의 용도 외에는 사용하지 마시오.
+? 내용물을 마시거나, 내용물이 눈 또는 피부에 닿을 경우 인체에 심각한 손상을 입힐 수 있으니 주의하시오.
+? 사람 또는 동물(관상용 물고기, 조류 포함) 등에 직접 사용(분사)하지 마시오.
+? 밀폐된 공간에서 사용 시 환기를 충분히 하시오.
+? 어린이 손에 닿지 않는 곳에 보관하시오.
+? 제품의 용법과 달리 다른 제품과 섞어 사용할 경우 인체에 치명적인 손상을 입힐 수 있으니 섞어 사용하지 마시오.
+? 피부, 음식물, 식기, 어린이의 장난감 또는 사료에 닿지 않도록 하시오.
+
+ㆍ과다 사용 시 내성을 발생시킬 수 있으므로 제품에 명시된 사용량을 엄격 히 준수하십시오.
+ㆍ사용 전후에는 다음 사항에 유의 하십시오. 
+① 용법·용량(사용방법)에 따라 바르게 사용하십시오. 
+② 피레스로이드계 성분 흡입 시 중독증상으로 재채기, 비염, 천식, 혼수, 두 통, 이명, 구역 등이 나타날 수 있으므로 사람이 있는 밀폐된 공간에서는 사용을 피하고, 사용 전·후 충분히 환기하십시오.
+③ 만약 중독 증상이 나타나는 경우 즉시 의사의 진료를 받으십시오. 
+④ 본 제품은 인체에 유해하므로 먹지 마시고, 내용물을 삼켰을 경우 즉시 의사와 상담하고 제품의 용기를 의사에게 보여주십시오.
+⑤ 본 제품의 유효성분은 어류와 수생동물에 대해 강력한 독성을 나타내기 때문에 본 제품과 빈 용기가 하천이나 저수지 등에 유입되지 않도록 주 의하시기 바랍니다. 
+⑥ 취급 후 즉시 손을 씻으십시오. 
+⑦ 사용 후 제품이 환경으로 직접 배출되지 않도록 하십시오. 
+⑧ 직사광선을 피하고 어린이의 손에 닿지 않는 장소에 보관하십시오. 
+⑨ 3~4개월 이상 장기간 사용하지 않을 시에는 살충원액 용기를 꺼내어 뚜 껑을 잘 막은 후 보관하십시오. 
+⑩ 화기에 주의하여 화기 부근에서는 사용하지 말며 기구를 거꾸로 또는 매 달아 사용하지 마십시오.
+⑪ 심지는 직접 피부에 닿지 않게 주의하시고 만일 손에 묻으면 비누로 잘 씻으십시오.
+⑫ 용기의 심지는 고정시킨 것이지만 무리하게 잡아 당기지 마십시오.
+⑬ 전기를 통하는 중에는 살충성분이 연속으로 휘산되므로 사용하지 않을 때는 꼭 스위치를 끄십시오.</td>
+						</tr>
+						<tr>
+							<th>사용자에 대한 응급조치 방법</th>
+							<td style="text-align:justify;">
+- 먹었을 때: 제품은 인체에 유해하므로 먹지 않도록 하되, 내용물을 삼켰을 경우 즉시 의사와 상담하고 제품의 용기를 의사에게 보여줄 것. 토하게 하지 말 것.
+- 흡입했을 때: 직접 흡입을 피하되, 흡입한 경우 신선한 공기가 있는 곳으로 이동한 후 호흡 하기 쉬운 자세로 안정을 취하게 하고 의사의 조언을 구할 것.
+- 눈에 들어갔을 때: 즉시 흐르는 물로 15분 이상 오염된 눈을 부드럽게 씻어낼 것. 컨택트 렌즈를 착용한 경우, 렌즈를 제거하고 눈을 부드럽게 씻어낼 것. 필요하면 의사의 진료를 받을 것.
+- 피부에 접촉했을 때: 비누와 다량의 물로 15분 이상 씻어낼 것. 피부자극 또는 홍반이 나타나면 의학적인 조치/조언을 받으시오. 의류가 오염된 경우 오염된 의류를 벗고 다시 사용 전 세척하시오.</td>
+						</tr>
+						<tr>
+							<th colspan="2">• 폐기방법</th>
+							<td style="text-align:justify;">
+- 빈 용기를 재사용하지 말 것.
+- 폐기 전 용기를 완전히 비울 것.
+- 빈 용기는 재질에 따라 분리배출할 것.
+- 용기에 제품이 남아있는 경우 배수구에 유입되지 않도록 할 것.</td>
+						</tr>
+						<tr>
+							<th colspan="2">• 내성발생 예방을 위한 조치</th>
+							<td style="text-align:justify;">
+- 사용 전에 표시사항을 반드시 읽고, 표시사항에 따라 제품을 사용할 것.
+- 과다 사용 시 내성을 발생시킬 수 있으므로 제품에 명시된 사용량을 엄격 히 준수할 것.
+- 정해진 용도 및 사용방법 이외에는 사용하지 말 것.
+- 용법·용량에 따라 바르게 사용할 것. </td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	<!-- ============= 물리화학적 특성 정보 ============== -->
+		    <div class="form-h20">물리화학적 특성 정보
+				<img style="top: -3px; position:relative; margin-left:5px;" class="openBtn" src="/img/form/f-img15.png" alt="물리화학적 특성 정보 열기" />
+				<img style="top: -3px; position:relative; margin-left:5px; display:none;" class="closeBtn" src="/img/form/f-img14.png"  alt="물리화학적 특성 정보 닫기"/>
+			</div>
+			<div class="tableWrap" style="display:none;">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="7%" />
+						<col width="10%" />
+						<col width="18%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>구분</th>
+							<th colspan="2">항목</th>
+							<th>결과</th>
+						</tr>
+						<tr>
+							<th rowspan="5">물리화학적 특성</th>
+							<th rowspan="4">제품의 상태</th>
+							<th>물리적 상태(20℃)</th>
+							<td>액체</td>
+						</tr>
+						<tr>
+							<th>응집상태 (Form)</th>
+							<td>액체</td>
+						</tr>
+						<tr>
+							<th>색깔</th>
+							<td>옅은 노란색</td>
+						</tr>
+						<tr>
+							<th>냄새</th>
+							<td>특이취</td>
+						</tr>
+						<tr>
+							<th colspan="2">수소이온 농도(pH), 산도 또는 알칼리도</th>
+							<td>· 해당 없음: 제품 사용 과정에서 희석하지 않으며, 구성성분 중 물을 포함하고 있지 않음</td>
+						</tr>
+						<tr>
+							<th rowspan="3">물리적 위험성</th>
+							<th colspan="2">폭발성</th>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th colspan="2">인화성</th>
+							<td>구분 4</td>
+						</tr>
+						<tr>
+							<th colspan="2">산화성</th>
+							<td>분류되지 않음</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	<!-- ============= 유해성 정보 및 위해성 정보 ============== -->
+			<div class="form-h20">유해성 정보 및 위해성 정보
+				<img style="top: -3px; position:relative; margin-left:5px;" class="openBtn" src="/img/form/f-img15.png" alt="유해성 정보 및 위해성 정보 열기" />
+				<img style="top: -3px; position:relative; margin-left:5px; display:none;" class="closeBtn" src="/img/form/f-img14.png"  alt="유해성 정보 및 위해성 정보 닫기"/>
+			</div>
+			<div class="tableWrap" style="display:none;">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="5%" />
+						<col width="5%" />
+						<col width="15%" />
+						<col width="5%" />
+						<col width="5%" />
+						<col width="15%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th rowspan="2">구분</th>
+							<th rowspan="2">작성항목</th>
+							<th rowspan="2">작성항목</th>
+							<th colspan="2">필수자료 구분</th>
+							<th rowspan="2">자료 제출 여부</th>
+							<th rowspan="2">결과</th>
+						</tr>
+						<tr>
+							<th>시험<br>자료</th>
+							<th>일반<br>자료</th>
+						</tr>
+						<tr>
+							<th rowspan="17">인체</th>
+							<th rowspan="14">유해성</th>
+							<th>급성 경구 독성</th>
+							<th>필수</th>
+							<th> </th>
+							<td>시험자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>급성 경피독성</th>
+							<th>필수</th>
+							<th> </th>
+							<td>시험자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>급성 흡입 독성</th>
+							<th>필수</th>
+							<th> </th>
+							<td>시험자료</td>
+							<td>구분 3 (증기)</td>
+						</tr>
+						<tr>
+							<th>피부 자극성 또는 부식성</th>
+							<th>필수</th>
+							<th> </th>
+							<td>시험자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>눈 자극성 또는 부식성</th>
+							<th>필수</th>
+							<th> </th>
+							<td>시험자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>피부 과민성</th>
+							<th>필수</th>
+							<th> </th>
+							<td>면제</td>
+							<td>구분 1</td>
+						</tr>
+						<tr>
+							<th>호흡기 과민성</th>
+							<th>조건부</th>
+							<th> </th>
+							<td>면제</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>피부흡수 정보</th>
+							<th>필수</th>
+							<th></th>
+							<td>면제</td>
+							<td>1</td>
+						</tr>
+						<tr>
+							<th>생식세포 변이원성</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>발암성</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>생식독성</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>특정 표적장기 독성 - 1회 노출</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>특정 표적장기 독성 - 반복 노출</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>분류되지 않음</td>
+						</tr>
+						<tr>
+							<th>흡인유해성</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>구분 1</td>
+						</tr>
+						<tr>
+							<th rowspan="3">위해성</th>
+							<th>사용 대상자 및 사용범위</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>
+일반사용자(직업소비자)-다중이용시설(실내)
+일반사용자(일반소비자)-주거시설(실내)</td>
+						</tr>
+						<tr>
+							<th>주요 노출경로</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>흡입, 경피</td>
+						</tr>
+						<tr>
+							<th>인체 위해성 평가의 허용 여부</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td>허용기준 이내</td>
+						</tr>
+						<tr>
+							<th rowspan="9">환경</th>
+							<th rowspan="7">유해성</th>
+							<th>어류독성</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							<td rowspan="3">수생환경 유해성(4.1) 급성의 구분 1
+수생환경 유해성(4.1) 만성의 구분 1</td>
+						</tr>
+						<tr>
+							<th>무척추동물독성</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							
+						</tr>
+						<tr>
+							<th>담수조류 생장저해</th>
+							<th> </th>
+							<th>필수</th>
+							<td>일반자료</td>
+							
+						</tr>
+						<tr>
+							<th>미생물 활성저해</th>
+							<th> </th>
+							<th>조건부</th>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>저서생물 독성</th>
+							<th> </th>
+							<th>조건부</th>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>육생식물 독성</th>
+							<th> </th>
+							<th>조건부</th>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>육생 무척추동물 독성</th>
+							<th> </th>
+							<th>조건부</th>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th rowspan="2">위해성</th>
+							<th>주요 노출경로(환경매체)</th>
+							<th> </th>
+							<th> 필수</th>
+							<td>일반자료</td>
+							<td>하·폐수처리시설(STP), 수계, 토양, 퇴적물</td>
+						</tr>
+						<tr>
+							<th>환경 위해성 평가의 허용 여부</th>
+							<th> </th>
+							<th> 필수</th>
+							<td>일반자료</td>
+							<td>허용기준 이내</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	<!-- ============= 안전성에 관한 종합자료 ============== -->
+			<div class="form-h20">안전성에 관한 종합자료
+				<img style="top: -3px; position:relative; margin-left:5px;" class="openBtn" src="/img/form/f-img15.png" alt="안전성에 관한 종합자료 열기" />
+				<img style="top: -3px; position:relative; margin-left:5px; display:none;" class="closeBtn" src="/img/form/f-img14.png" alt="안전성에 관한 종합자료 닫기"/>
+				
+			</div>
+			<div class="tableWrap" style="display:none;">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="7%" />
+						<col width="13%" />
+						<col width="15%" />
+						<col width="20%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th colspan="4">구분</th>
+							<th>평가</th>
+						</tr>
+						<tr>
+							<th rowspan="12">1단계</th>
+							<th rowspan="7">[1-1]</th>
+							<th rowspan="7">법 제20조제2항제1호<br/>
+											(고시 [별표2] 살생물제품의 승인기준)</th>
+							<th>1-1-1. 제품 분류기준에 해당하는 경우</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>(해당하는 경우 해당사항)</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>1-1-2. 내분비계 장애 영향 (EDCs)</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>1-1-3. 발달 신경독성 또는 면역독성 영향</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>1-1-4. 수은 또는 수은화합물 함유</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>1-1-5. 잔류성·생물축적성·독성 (PBT) 또는 고잔류성·고생물축적성 (vP·vB) 기준에 부합하는 경우</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>1-1-6. 위해성이 나타난 경우</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>[1-2]</th>
+							<th>법 제20조제2항제2호</th>
+							<th>제품 내 모든 살생물물질의 승인 등 부적합 여부</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>[1-3]</th>
+							<th>법 제20조제2항제3호</th>
+							<th>효과·효능이 충분하지 않음</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>[1-4]</th>
+							<th>법 제20조제2항제4호</th>
+							<th>내성의 가능성이 있거나 저감 불가능</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>[1-5]</th>
+							<th>법 제20조제2항제5호</th>
+							<th>척추동물에 대한 명백한 고통 및 고통의 지속성 등</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>[1-6]</th>
+							<th>법 제20조제2항제6호</th>
+							<th>안전사고 방지를 위한 안전용기 또는 포장 사용 부적합</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th class="sub2th" colspan="4">승인기준 적용 평가</th>
+							<th class="sub2th">적합</th>
+						</tr>
+						<tr>
+							<th rowspan="4"></th>
+							<th rowspan="2">[2-1]</th>
+							<th rowspan="2">법 제20조제5항제1호</th>
+							<th>2-1-1. 법 제20조제4항에 따라 제품승인의 기준이 완화 적용되는 살생물제품</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>(해당하는 경우 해당사항)</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th rowspan="2">[2-2]</th>
+							<th rowspan="2">법 제20조제5항제2호</th>
+							<th>2-2-1. 법 제12조제4항의 어느 하나에 해당하는 살생물물질 함유 제품</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th>(해당하는 경우 해당사항)</th>
+							<td>-</td>
+						</tr>
+						<tr>
+							<th class="sub2th" style="font-weight: bold;" colspan="4">최종 적용 결과</th>
+							<th class="sub2th" id="result_year"></th>
+						</tr>
+						<tr>
+							<td colspan="4">1단계와 2단계 모두 해당없음 : 10년</td>
+							<td>√</td>
+						</tr>
+						<tr>
+							<td colspan="4">- 환경∙인체 유해성정보 및 분류∙표시에 따라 부정적 영향이 하나 이상 확인되나 그 외 승인기준을 모두 만족하는 경우, '전문 사용자'를 사용자 범위로 하여 승인: 10년</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td colspan="4">2단계 [2-1] 또는 [2-2] 해당 : 5년</td>
+							<td>-</td>
+						</tr>
+						<tr>
+							<td colspan="4">2단계 [2-1]와 [2-2] 모두 해당 : 3년</td>
+							<td>-</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	<!-- ============= 살생물제품 재승인 단계 고려사항 ============== -->
+			<div class="form-h20">살생물제품 재승인 단계 고려사항
+				<img style="top: -3px; position:relative; margin-left:5px;" class="openBtn" src="/img/form/f-img15.png" alt="살생물제품 재승인 단계 고려사항 열기" />
+				<img style="top: -3px; position:relative; margin-left:5px; display:none;" class="closeBtn" src="/img/form/f-img14.png" alt="살생물제품 재승인 단계 고려사항 닫기"/>
+			</div>
+			<div class="tableWrap" style="display:none;">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<td style="text-align:justify;">- 효과·효능
+   내성(또는 저항성)에 대한 평가는 제출된 자료(일반자료)를 기반으로 평가되었으며, 추후 재승인 시 내성에 대한 재검토가 필요할 수 있다.</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+	<!-- ============= 변경승인 및 신고 사항 ============== -->
+			<div class="form-h20">변경승인 및 신고 사항
+				<img style="top: -3px; position:relative; margin-left:5px;" class="openBtn" src="/img/form/f-img15.png" alt="변경승인 및 신고 사항 열기" />
+				<img style="top: -3px; position:relative; margin-left:5px; display:none;" class="closeBtn" src="/img/form/f-img14.png" alt="변경승인 및 신고 사항 닫기"/>
+			</div>
+			<div class="tableWrap" style="display:none;">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="15%" />
+						<col width="20%" />
+						<col width="15%" />
+						<col width="25%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>변경일</th>
+							<th>변경 전</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>
+						
+							<tr>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						
+					</tbody>
+				</table>
+			</div>
+	<!-- ============= 기타 ============== -->
+			<div class="form-h20">기타
+				<img style="top: -3px; position:relative; margin-left:5px;" class="openBtn" src="/img/form/f-img15.png" alt="기타 열기" />
+				<img style="top: -3px; position:relative; margin-left:5px; display:none;" class="closeBtn" src="/img/form/f-img14.png" alt="기타 닫기"/>
+			</div>
+			<div class="tableWrap" style="display:none;">
+				<table class="table_normal green">
+					<caption></caption>
+					<colgroup>
+						<col width="35%" />
+						<col width="*" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>신청자 제공 제품라벨</th>
+							<td style="white-space: normal; text-align: center;">
+								
+								승인신청자 미제공
+							</td>
+						</tr>
+						<tr>
+							<th>신청자 제공 제품사진</th>
+							<td style="white-space: normal; text-align: center;">
+								
+								승인신청자 미제공
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
+<form name="frmPopup" id="frmPopup" method="POST">
+	<input type="hidden" name="bcpSn" value="34088">
+	<input type="hidden" name="bcpMstId" value="BCP_10C445F4D1">
+</form></div>
+			<hr>
+			<!-- bottom -->
+		</div>
+
+		
+
+<footer class="footer">
+	<div class="footBtnArea">
+		<div class="footBtn">
+			<ul>
+				<li><a href="/uss/umt/EgovMberSbscrbPopup.do" target="_blank"><span style="font-weight:bold;color:green;font-size:18px;">개인정보처리방침</a></span><i></i></li>
+				<li><a href="/uss/sam/stp/guideInstitution.do">제도안내</a><i></i></li>
+				<li><a href="https://privacy.kisa.or.kr/main.do" target="_blank">개인정보침해 신고센터</a><i></i></li>
+				<li><a href="javascript:notice();">찾아오는 길</a><i></i></li>
+				<li><a href="javascript:notice();">사이트맵</a><i></i></li>
+				<li><a href="/cpmsv2/common/manual.do">E-Book 매뉴얼</a></li>
+			</ul>
+		</div>
+	</div>
+	<ul class="addArea">
+		<li class="addLeft">
+			<a class="addLeftLogo" href="http://www.keiti.re.kr/site/keiti/main.do" target="_blank"></a>
+			<address class="add">
+				(우)03367 서울특별시 은평구 진흥로 215 한국환경산업기술원<br/>
+				(안전기준적합확인 신고)<br/>
+				생활화학제품 고객지원센터 : 1800-0490(연결번호 : 1번)
+			</address>
+		</li>
+		<li class="addRight">
+			<a class="addRightLogo" href="https://nics.me.go.kr/main.do" target="_blank"></a>
+			<address class="add">
+				충청북도 청주시 흥덕구 오송읍 오송생명11로 270(정중리640)<br/>
+				살생물제 및 안전확인대상생활화학제품 승인<br/>
+				(살생물제 산업계 지원단) : 1800-4840
+			</address>
+		</li>
+	</ul>
+</footer></div>
+</body>
+</html>

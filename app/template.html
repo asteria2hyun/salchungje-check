@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>살충제 판매가능 확인 (살생물제 승인)</title>
+<style>
+  :root { --green:#1a9e4b; --red:#d63a3a; --amber:#b26a00; --line:#e3e6ea; --muted:#6b7280; }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body { margin:0; font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+         color:#1f2430; background:#f5f6f8; padding-bottom:72px; }
+  header { background:#fff; padding:14px 16px; border-bottom:1px solid var(--line); }
+  header h1 { font-size:18px; margin:0; }
+  header .meta { font-size:12px; color:var(--muted); margin-top:4px; }
+  header .law { font-size:12px; color:var(--amber); margin-top:6px; font-weight:700; }
+  .wrap { padding:14px 16px; }
+  .combo { position:relative; }
+  .combo input { width:100%; font-size:17px; padding:13px 14px; border:1px solid var(--line);
+                 border-radius:12px; outline:none; }
+  .combo input:focus { border-color:var(--green); }
+  .suggest { list-style:none; margin:6px 0 0; padding:0; background:#fff; border:1px solid var(--line);
+             border-radius:12px; overflow:hidden; max-height:60vh; overflow-y:auto; }
+  .suggest li { padding:13px 14px; border-bottom:1px solid var(--line); display:flex;
+                justify-content:space-between; gap:10px; align-items:center; cursor:pointer; }
+  .suggest li:last-child { border-bottom:0; }
+  .suggest li:active { background:#f0f7f2; }
+  .suggest .snm { font-size:15px; }
+  .suggest .sty { font-size:12px; color:var(--muted); flex:0 0 auto; }
+  .suggest .nomatch { color:var(--muted); justify-content:center; cursor:default; }
+  .suggest .noneitem { background:#fff7f7; color:var(--red); font-weight:700; font-size:14px; }
+  .suggest .noneitem b { color:#1f2430; }
+  .hint { font-size:12px; color:var(--muted); margin:8px 2px 0; line-height:1.5; }
+  .summary { font-size:14px; font-weight:700; }
+  .resbar { display:flex; justify-content:space-between; align-items:center; margin:16px 2px 10px; gap:10px; }
+  .clearbtn { flex:0 0 auto; font-size:13px; border:1px solid var(--line); background:#fff;
+              border-radius:8px; padding:6px 11px; color:var(--muted); font-weight:600; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:14px; padding:14px;
+          margin-bottom:10px; }
+  .card .name { font-size:16px; font-weight:700; }
+  .row { font-size:13px; color:#333; margin-top:6px; line-height:1.45; }
+  .row b { color:var(--muted); font-weight:600; }
+  .badges { display:flex; gap:6px; align-items:center; margin-bottom:8px; flex-wrap:wrap; }
+  .badge { font-size:12px; font-weight:700; padding:4px 9px; border-radius:999px; }
+  .badge.ok { background:#e7f6ec; color:var(--green); }
+  .badge.no { background:#fde8e8; color:var(--red); }
+  .badge.wip { background:#fff3e0; color:var(--amber); }
+  .detailbtn { margin-top:10px; font-size:14px; padding:9px 12px; border:1px solid var(--green);
+               color:var(--green); background:#fff; border-radius:10px; font-weight:700; width:100%; }
+  .detailbtn[disabled] { border-color:var(--line); color:#aaa; }
+  .empty { text-align:center; color:var(--muted); padding:40px 10px; }
+  .noresult { background:#fff; border:1px solid var(--line); border-radius:14px; padding:20px; text-align:center; }
+  .noresult .big { font-size:18px; font-weight:800; color:var(--red); }
+  .noresult p { font-size:13px; color:var(--muted); margin:10px 0 0; line-height:1.5; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; margin-bottom:12px; }
+  .chip { font-size:13px; padding:7px 12px; border:1px solid var(--line); border-radius:999px;
+          background:#fff; }
+  .chip.active { background:var(--green); color:#fff; border-color:var(--green); }
+  nav { position:fixed; left:0; right:0; bottom:0; display:flex; background:#fff;
+        border-top:1px solid var(--line); }
+  nav button { flex:1; padding:12px 0 14px; border:0; background:none; font-size:13px; color:var(--muted); }
+  nav button.active { color:var(--green); font-weight:800; }
+  #detail { position:fixed; inset:0; background:#f5f6f8; z-index:20; display:none; flex-direction:column; }
+  #detail.open { display:flex; }
+  #detail .top { background:#fff; padding:12px 14px; border-bottom:1px solid var(--line);
+                 display:flex; align-items:center; gap:10px; }
+  #detail .top button { border:0; background:none; font-size:16px; color:var(--green); font-weight:700; }
+  #detail .body { overflow:auto; padding:14px 16px; }
+  dl { margin:0; }
+  dl .item { border-bottom:1px solid var(--line); padding:9px 0; }
+  dl dt { font-size:12px; color:var(--muted); font-weight:600; }
+  dl dd { margin:3px 0 0; font-size:14px; line-height:1.5; white-space:pre-wrap; }
+  .srclink { display:inline-block; margin:16px 0 8px; font-size:13px; color:var(--green); }
+  .hidden { display:none !important; }
+</style>
+</head>
+<body>
+<header>
+  <h1>살충제 판매가능 확인</h1>
+  <div class="meta" id="meta"></div>
+  <div class="law">2026.7.1 살생물제 승인제 시행 — 승인된 제품만 판매 가능</div>
+</header>
+
+<main>
+  <section id="view-search" class="wrap">
+    <div class="combo">
+      <input id="q" type="search" inputmode="search" placeholder="제품명 입력 (예: 에프킬라, 홈매트)" autocomplete="off">
+      <ul id="suggest" class="suggest hidden"></ul>
+    </div>
+    <div class="hint">제품명을 입력하면 후보가 아래에 뜹니다(공백·대소문자 무시). 같은 브랜드라도 제품마다 승인 여부가 다르니 정확히 고르세요. 맞는 게 없으면 맨 아래 "없음"을 선택.</div>
+    <div id="result"><div class="empty">제품명을 입력해 조회하세요.</div></div>
+  </section>
+
+  <section id="view-list" class="wrap hidden">
+    <div class="chips" id="chips"></div>
+    <div id="listResult"></div>
+  </section>
+</main>
+
+<nav>
+  <button id="tab-search" class="active">🔍 검색</button>
+  <button id="tab-list">📋 승인 전체목록</button>
+</nav>
+
+<div id="detail">
+  <div class="top"><button id="detailBack">← 뒤로</button><strong id="detailTitle"></strong></div>
+  <div class="body" id="detailBody"></div>
+</div>
+
+<script>
+/*__SEARCH_JS__*/
+</script>
+<script>
+const DB = __DB_JSON__;
+const $ = (s) => document.querySelector(s);
+const esc = (s) => (s || "").replace(/[&<>]/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;" }[c]));
+const SRC = "https://chempold.keiti.re.kr/cpms/bcp/disc/BcpDisclosureView.do?bcpDiscSn=";
+const MAX_SUGGEST = 30;
+
+$("#meta").textContent = `기준일 ${DB.기준일} · 승인 ${DB.총건수}건 (출처: 환경부 chempold)`;
+
+function statusBadge(p) {
+  return p.상태 === "작업중"
+    ? '<span class="badge wip">상세 준비중</span>'
+    : '<span class="badge ok">상세보기 가능</span>';
+}
+
+function cardHTML(p) {
+  const detailBtn = p.상태 === "작업중" || !p.sn
+    ? '<button class="detailbtn" disabled>상세 준비중</button>'
+    : `<button class="detailbtn" data-no="${esc(p.공개번호)}">상세보기</button>`;
+  return `<div class="card">
+    <div class="badges"><span class="badge ok">✅ 승인됨 · 판매 가능</span>${statusBadge(p)}</div>
+    <div class="name">${esc(p.제품명)}</div>
+    <div class="row"><b>유형</b> ${esc(p.유형)}</div>
+    <div class="row"><b>살생물물질</b> ${esc(p.물질명)}</div>
+    <div class="row"><b>사용자</b> ${esc(p.사용자)}</div>
+    <div class="row"><b>유효기간</b> ${esc(p.유효기간)}</div>
+    <div class="row"><b>정보공개번호</b> ${esc(p.공개번호)}</div>
+    ${detailBtn}
+  </div>`;
+}
+
+function renderSuggest(query) {
+  const ul = $("#suggest");
+  const q = query.trim();
+  if (!q) { ul.classList.add("hidden"); ul.innerHTML = ""; return; }
+  const matches = matchProducts(DB.제품, q).slice(0, MAX_SUGGEST);
+  let rows = matches.map((p) =>
+    `<li data-no="${esc(p.공개번호)}"><span class="snm">${esc(p.제품명)}</span>` +
+    `<span class="sty">${esc(p.유형)}</span></li>`
+  ).join("");
+  if (matches.length === 0) rows = '<li class="nomatch">일치하는 승인 제품이 없습니다</li>';
+  rows += `<li class="noneitem" data-none="1">✕ 없음 — "<b>${esc(q)}</b>" 승인목록에 없음(미승인)</li>`;
+  ul.innerHTML = rows;
+  ul.classList.remove("hidden");
+}
+
+function clearResult() {
+  $("#q").value = "";
+  $("#suggest").classList.add("hidden");
+  $("#result").innerHTML = '<div class="empty">제품명을 입력해 조회하세요.</div>';
+  $("#q").focus();
+}
+
+function selectProduct(no) {
+  const p = DB.제품.find((x) => x.공개번호 === no);
+  if (!p) return;
+  $("#q").value = p.제품명;
+  $("#suggest").classList.add("hidden");
+  $("#result").innerHTML =
+    `<div class="resbar"><span class="summary">✅ 승인된 살생물제품 — 판매 가능</span>` +
+    `<button class="clearbtn" data-clear="1">✕ 지우기</button></div>` + cardHTML(p);
+}
+
+function selectNone(query) {
+  const q = query.trim();
+  if (!q) return;
+  if (!confirm(`"${q}"(으)로 검색했는데 승인목록에 없습니다.\n미승인(판매 불가 대상)으로 표시할까요?`)) return;
+  $("#suggest").classList.add("hidden");
+  $("#result").innerHTML = `<div class="resbar"><span class="summary">검색 결과</span>` +
+    `<button class="clearbtn" data-clear="1">✕ 지우기</button></div>` + `<div class="noresult">
+    <div class="big">⚠️ 미승인 — 판매 불가 대상</div>
+    <p>"<b>${esc(q)}</b>"은(는) 승인 살생물제품 목록(${DB.총건수}건)에 없습니다.<br>
+    살충제·살생물 용도 제품이라면 <b>2026.7.1부터 판매 불가</b> 대상입니다.<br>
+    띄어쓰기·오타를 확인하거나 더 짧은 키워드로 다시 검색해 보세요.<br>
+    <small>※ 같은 브랜드라도 제품마다 다릅니다. 최종 판단은 공식 공지·제조사 확인을 권장합니다.</small></p>
+  </div>`;
+}
+
+function openDetail(no) {
+  const p = DB.제품.find((x) => x.공개번호 === no);
+  if (!p) return;
+  $("#detailTitle").textContent = p.제품명;
+  const items = (p.상세 || []).map(
+    ([k, v]) => `<div class="item"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`
+  ).join("");
+  const link = p.sn
+    ? `<a class="srclink" href="${SRC}${esc(p.sn)}" target="_blank" rel="noopener">공식 원문 보기 ↗</a>`
+    : "";
+  $("#detailBody").innerHTML = items
+    ? `<dl>${items}</dl>${link}`
+    : '<div class="empty">상세 정보 준비중입니다.</div>';
+  $("#detail").classList.add("open");
+}
+
+function renderList(type) {
+  const items = type === "전체" ? DB.제품 : DB.제품.filter((p) => (p.유형 || "").includes(type));
+  $("#listResult").innerHTML =
+    `<div class="summary">${items.length}건</div>` + items.map(cardHTML).join("");
+}
+
+const types = ["전체", ...Array.from(new Set(DB.제품.map((p) => p.유형).filter(Boolean)))];
+$("#chips").innerHTML = types
+  .map((t, i) => `<button class="chip${i === 0 ? " active" : ""}" data-type="${esc(t)}">${esc(t)}</button>`)
+  .join("");
+
+$("#q").addEventListener("input", () => renderSuggest($("#q").value));
+$("#q").addEventListener("focus", () => renderSuggest($("#q").value));
+$("#suggest").addEventListener("click", (e) => {
+  if (e.target.closest("[data-none]")) { selectNone($("#q").value); return; }
+  const item = e.target.closest("li[data-no]");
+  if (item) selectProduct(item.dataset.no);
+});
+$("#detailBack").addEventListener("click", () => $("#detail").classList.remove("open"));
+document.addEventListener("click", (e) => {
+  if (e.target.closest("[data-clear]")) { clearResult(); return; }
+  const b = e.target.closest(".detailbtn[data-no]");
+  if (b) openDetail(b.dataset.no);
+  const c = e.target.closest(".chip");
+  if (c) {
+    document.querySelectorAll(".chip").forEach((x) => x.classList.toggle("active", x === c));
+    renderList(c.dataset.type);
+  }
+});
+function switchTab(which) {
+  $("#tab-search").classList.toggle("active", which === "search");
+  $("#tab-list").classList.toggle("active", which === "list");
+  $("#view-search").classList.toggle("hidden", which !== "search");
+  $("#view-list").classList.toggle("hidden", which !== "list");
+  if (which === "list" && !$("#listResult").innerHTML) renderList("전체");
+}
+$("#tab-search").addEventListener("click", () => switchTab("search"));
+$("#tab-list").addEventListener("click", () => switchTab("list"));
+</script>
+</body>
+</html>
